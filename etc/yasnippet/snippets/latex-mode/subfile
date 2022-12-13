@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: subfile
+# key: subfile
+# --
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+
+\section{`(substring (prin1-to-string (current-buffer)) 9 -5)`}
+\label{sec:`(substring (prin1-to-string (current-buffer)) 9 -5)`}
+
+\end{document}
+%%% Local Variables:
+%%% TeX-master: "./`(current-buffer)`"
+%%% End:

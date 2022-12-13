@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: tikzlib
+# key: tikzlib
+# --
+\usetikzlibrary{$1}
+$0

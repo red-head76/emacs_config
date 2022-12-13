@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: Oarticle
+# key: Oarticle
+# --
+@article{ ${title},
+  author  = {${author}},
+  title   = {${title}},
+  journal = {${journal}},
+  year    = {${year}}${,
+  URL     = {${URL}}},
+}
+
+$0

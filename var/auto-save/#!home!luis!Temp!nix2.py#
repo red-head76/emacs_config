@@ -1,0 +1,22 @@
+import numpy as np
+import itertools as itt
+
+M = np.arange(3)
+
+power_set = []
+for l in range(len(M) + 1):
+    for subset in list(itt.combinations(M, l)):
+        power_set.append(subset)
+
+potential_topos = []
+for l in range(len(power_set)):
+    for subset in list(itt.combinations(power_set, l)):
+        potential_topos.append(subset)
+
+
+def check_cond_one(topo):
+    if () in topo and [M] in topo:
+        return True
+    return False
+
+

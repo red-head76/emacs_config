@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# key: orgtable
+# name : orgtable
+# --
+\begin{table}[htbp]
+  \centering
+  
+  #+ORGTBL: SEND ${1:tablename} orgtbl-to-latex :splice nil :skip 0
+  ${4: $(org-table-create)}
+
+  $0
+  % BEGIN RECEIVE ORGTBL $1
+  % END RECEIVE ORGTBL $1
+  \caption{${2:caption}}
+  \label{${3:waiting for reftex-label call...$(unless yas/modified-p (reftex-label nil 'dont-insert))}}
+\end{table}

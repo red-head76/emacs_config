@@ -1,0 +1,1 @@
+/home/luis/.emacs.d/straight/repos/themes/themes/doom-monokai-ristretto-theme.el

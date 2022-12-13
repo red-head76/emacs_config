@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: package
+# key: pkg
+# --
+;; Package: ${1:Packagename}
+;; ________________________________________
+(require '$1)
+$0

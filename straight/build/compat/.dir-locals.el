@@ -1,0 +1,1 @@
+/home/luis/.emacs.d/straight/repos/compat/.dir-locals.el

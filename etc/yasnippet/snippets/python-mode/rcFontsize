@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: rcFontsize
+# key: rcf
+# --
+plt.rcParams.update({"font.size":${1:14}})
+$0

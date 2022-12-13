@@ -1,0 +1,10 @@
+\documentclass[]{article}
+
+\author{Luis}
+\usepackage{amsmath}
+\begin{document}
+\begin{enumerate}
+\item Das Pendel einer Wanduhr macht in 2 Minuten 150 Schwingungen. Berechne die Periodendauer und
+  Frequenz des Pendels. Berechne die Anzahl der Schwingungen an einem Tan und in einem Jahr.
+\end{enumerate}
+\end{document}

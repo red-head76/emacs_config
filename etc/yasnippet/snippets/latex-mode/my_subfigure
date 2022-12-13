@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: my subfigure
+# key: mysf
+# --
+\begin{subfigure}[b]{${1:0.3}\textwidth}
+  \includegraphics[width=\textwidth]{${2:path.pdf}}
+\end{subfigure}
+$0

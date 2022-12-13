@@ -1,0 +1,187 @@
+* Development
+** Languages
+*** Python
+#+begin_src emacs-lisp
+
+  (use-package flycheck
+    :init (global-flycheck-mode))
+
+  ;; Use doctest functionality
+  (defun elpy-doctest-buffer (&optional arg)
+    "Send the active buffer to the Python shell and run any doctests.
+    With the prefix argument it will run the doctest in verbose mode"
+    (interactive "P")
+    (python-shell-send-buffer)
+    (python-shell-send-string "import doctest")
+    (if arg
+        (python-shell-send-string "doctest.testmod(verbose=True)")
+      (python-shell-send-string "doctest.testmod(verbose=False)")))
+
+  ;; elpy-predefinitions
+  (defun def-elpy-keybindings ()
+    ;; define keymap
+    (define-prefix-command 'elpy-keymap)
+    (define-key xah-fly-leader-key-map (kbd "c") elpy-keymap)
+    ;; define keys
+    (define-key elpy-keymap (kbd "f") 'elpy-folding-toggle-at-point)
+    (define-key elpy-keymap (kbd "m") 'python-mark-defun)
+    (define-key elpy-keymap (kbd "k") 'elpy-shell-kill)
+    (define-key elpy-keymap (kbd "c") 'elpy-shell-send-region-or-buffer)
+    (define-key elpy-keymap (kbd "t") 'elpy-doctest-buffer)
+    )
+
+  ;;  Using elpy as development environment
+  (use-package elpy
+    :init
+    (elpy-enable)
+    :hook 
+    (python-mode . def-elpy-keybindings)
+    (python-mode . hs-minor-mode)
+    (python-mode . flyspell-prog-mode)
+    :config
+    (setq elpy-rpc-python-command "python3") ;;use python3
+    (setq python-shell-interpreter "python3") ;;use python3
+    (add-hook 'elpy-mode-hook 'flycheck-mode)
+    (add-hook 'python-mode-hook (lambda () (set-fill-column 99)))
+    (setq elpy-code-formatter 'autopep8)
+    (setq flycheck-flake8-maximum-line-length 100)
+    (setq elpy-shell-starting-directory 'current-directory) ;; default is 'project-root
+    (setq elpy-shell-echo-input nil)
+    (setq python-shell-completion-native-enable nil)
+    ;; Use smartparens python config
+    (require 'smartparens-python)
+    )
+
+  (use-package py-autopep8
+    :hook python-mode
+    :config
+    (setq py-autopep8-options '("--max-line-length=100" "--aggressive")))
+
+  ;; (define-key python-mode-map (kbd "M->") 'elpy-nav-indent-shift-right)
+  ;; (define-key python-mode-map (kbd "M-<") 'elpy-nav-indent-shift-left)
+
+#+end_src
+*** LaTeX
+#+begin_src emacs-lisp
+  (defun def-LaTeX-keybindings ()
+    ;; define keymap
+    (define-prefix-command 'LaTeX-keymap)
+    (define-key xah-fly-leader-key-map (kbd "c") LaTeX-keymap)
+    ;; define keys
+    (define-key LaTeX-keymap (kbd "q") 'LaTeX-fill-paragraph)
+    (define-key LaTeX-keymap (kbd "c") 'TeX-command-master)
+    (define-key LaTeX-keymap (kbd "v") 'TeX-view)
+    (define-key LaTeX-keymap (kbd "s") 'LaTeX-section)
+    (define-key LaTeX-keymap (kbd "e") 'LaTeX-environment)
+    (define-key LaTeX-keymap (kbd ".") 'LaTeX-mark-environment)
+    (define-key LaTeX-keymap (kbd "j") 'LaTeX-insert-item)
+    (define-key LaTeX-keymap (kbd "r") 'reftex-hyperref-autoref)
+    (define-key LaTeX-keymap (kbd "p") 'reftex-citep)
+    (define-key LaTeX-keymap (kbd "t") 'reftex-toc)
+    ;; Unset insert-quote because it destroys smartparens work
+    ;; (define-key TeX-mode-map (kbd "\"") nil)
+    )
+
+  ;; (use-package tikz
+  ;; :config
+  ;; (setq tikz-viewer "PDF Tools"))
+
+  ;; maybe the following could be updated with the init from
+  ;; https://github.com/jwiegley/use-package/issues/379
+
+  (use-package tex-mode 			; auctex
+    :ensure auctex
+    :hook
+    (LaTeX-mode . def-LaTeX-keybindings)
+    (LaTeX-mode . company-mode)
+    ;; Use orgtbl-mode for creating tables
+    ;; (LaTeX-mode . orgtbl-mode)
+    :mode "\\.tex\\'"
+    :config
+    (add-hook 'LaTeX-mode-hook 'flyspell-mode)
+    (add-hook 'LaTeX-mode-hook 'flyspell-buffer)
+    (add-hook 'LaTeX-mode-hook 'turn-on-auto-fill)
+    (add-hook 'LaTeX-mode-hook (lambda () (set-fill-column 99)))
+    (load "auctex.el" nil t t)
+    (setq TeX-parse-self t)
+    (setq TeX-save-query nil)
+    (setq TeX-master "./main")
+    (setq TeX-PDF-mode t)
+    ;; Use smartparens config for latex
+    (require 'smartparens-latex)
+    ;; Use pdf-tools to open PDF files
+    (setq TeX-view-program-selection '((output-pdf "PDF Tools")) TeX-source-correlate-start-server t)
+    ;; Revert pdf buffer after compiling document
+    (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
+    ;; Reftex things
+    (require 'reftex)
+    (add-hook 'LaTeX-mode-hook 'reftex-parse-all)
+    (setq reftex-plug-into-AUCTeX t)
+    (add-to-list 'reftex-default-bibliography "../inputs/references.bib")
+    (add-to-list 'reftex-default-bibliography "references.bib")
+    (setq TeX-source-correlate-mode t)
+    (setq TeX-source-correlate-start-server t)
+    ;; ('(setcar (cdr (assoc 'output-pdf TeX-view-program-selection)) "Okular"))
+    )
+
+
+#+end_src
+*** R
+#+begin_src emacs-lisp
+
+  ;; (use-package ess
+  ;;  :mode ("\\.r\\'" . r-mode))
+
+#+end_src
+
+** Company Mode
+
+[[http://company-mode.github.io/][Company Mode]] provides a nicer in-buffer completion interface than =completion-at-point= which is more reminiscent of what you would expect from an IDE.  We add a simple configuration to make the keybindings a little more useful (=TAB= now completes the selection and initiates completion at the current location if needed).
+
+
+#+begin_src emacs-lisp
+
+  (use-package company
+    :after lsp-mode
+    :hook (lsp-mode . company-mode)
+    :bind (:map company-active-map
+           ("<tab>" . company-complete-selection))
+          (:map lsp-mode-map
+           ("<tab>" . company-indent-or-complete-common))
+    :custom
+    (company-minimum-prefix-length 1)
+    (company-idle-delay 0.0))
+
+
+  (use-package company-auctex
+    :hook LaTeX
+    :config
+    (company-auctex-init))
+
+#+end_src
+
+** Magit
+
+[[https://magit.vc/][Magit]] is the best Git interface I've ever used.  Common Git operations are easy to execute quickly using Magit's command panel system.
+
+#+begin_src emacs-lisp
+
+  (use-package magit
+    :commands magit-status
+    :custom
+    (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+
+#+end_src
+
+** Pdf view
+#+begin_src emacs-lisp
+
+  (use-package pdf-tools
+  :mode ("\\.pdf\\'" . pdf-view-mode)
+  :config
+  (pdf-tools-install t)
+  (setq pdf-view-midnight-minor-mode t)
+  )
+
+#+end_src
+
