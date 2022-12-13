@@ -1,5 +1,0 @@
-PYTHON?=python
-
-test_unit:
-	@echo '--->  Running unit tests'
-	@${PYTHON} tests/test_ultrastar_tabe.py
