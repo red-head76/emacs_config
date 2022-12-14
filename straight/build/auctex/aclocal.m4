@@ -1,1 +1,0 @@
-/home/luis/.emacs.d/straight/repos/auctex/aclocal.m4

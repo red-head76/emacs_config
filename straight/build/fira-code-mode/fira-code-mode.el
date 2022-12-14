@@ -1,1 +1,0 @@
-/home/luis/.emacs.d/straight/repos/fira-code-mode/fira-code-mode.el

@@ -1,1 +1,0 @@
-/home/luis/.emacs.d/straight/repos/auctex/tests/tex/command-expansion.el
